@@ -1,0 +1,5 @@
+e~*
+*/obj/*
+!*/obj/.gitkeeper
+*/gtkwave/*
+!*/gtkwave/.gitkeeper
