@@ -1,0 +1,62 @@
+VHDL=ghdl
+VHDL_FLAGS=
+
+OBJ_DIR=./obj
+SRC_DIR=./src
+GTKWAVE_DIR=./gtkwave
+
+all: gates multiplexer example example_tb xand selection selection_tb xand_tb
+
+analyze: example_tb selection_tb xand_tb
+	${VHDL} -r example_tb --vcd=${GTKWAVE_DIR}/example_tb.vcd
+	${VHDL} -r selection_tb --vcd=${GTKWAVE_DIR}/selection_tb.vcd
+	${VHDL} -r xand_tb --vcd=${GTKWAVE_DIR}/xand_tb.vcd
+
+gates:
+	${VHDL} -a --workdir=${OBJ_DIR} ${SRC_DIR}/$@.vhdl
+	${VHDL} -e --workdir=${OBJ_DIR} gateAND
+	${VHDL} -e --workdir=${OBJ_DIR} gateOR
+	${VHDL} -e --workdir=${OBJ_DIR} gateNOT
+	${VHDL} -e --workdir=${OBJ_DIR} gateXOR
+
+xand:
+	${VHDL} -a --workdir=${OBJ_DIR} ${SRC_DIR}/$@.vhdl && \
+	${VHDL} -e --workdir=${OBJ_DIR} $@
+
+xand_tb: xand
+	${VHDL} -a --workdir=${OBJ_DIR} ${SRC_DIR}/$@.vhdl && \
+	${VHDL} -e --workdir=${OBJ_DIR} $@
+
+multiplexer:
+	${VHDL} -a --workdir=${OBJ_DIR} ${SRC_DIR}/$@.vhdl && \
+	${VHDL} -e --workdir=${OBJ_DIR} $@
+
+example: gates
+	${VHDL} -a --workdir=${OBJ_DIR} ${SRC_DIR}/$@.vhdl && \
+	${VHDL} -e --workdir=${OBJ_DIR} $@
+
+example_tb: example
+	${VHDL} -a --workdir=${OBJ_DIR} ${SRC_DIR}/$@.vhdl && \
+	${VHDL} -e --workdir=${OBJ_DIR} $@
+
+selection:
+	${VHDL} -a --workdir=${OBJ_DIR} ${SRC_DIR}/$@.vhdl && \
+	${VHDL} -e --workdir=${OBJ_DIR} $@
+
+selection_tb: selection
+	${VHDL} -a --workdir=${OBJ_DIR} ${SRC_DIR}/$@.vhdl && \
+	${VHDL} -e --workdir=${OBJ_DIR} $@
+
+clean:
+	rm -f ${OBJ_DIR}/*
+	rm -f ${GTKWAVE_DIR}/*
+	rm -f e~*
+	rm -f gates
+	rm -f multiplexer
+	rm -f example
+	rm -f example_tb
+	rm -f xand
+	rm -f xand_tb
+	rm -f gateand gatenot gateor gatexor
+	rm -f selection
+	rm -f selection_tb
