@@ -8,23 +8,23 @@ GTKWAVE_DIR=./gtkwave
 all: echo unit unit_tb
 
 analyze: unit_tb
-	${VHDL} -r unit_tb --vcd=${GTKWAVE_DIR}/unit_tb.vcd
+	$(VHDL) -r unit_tb --vcd=$GTKWAVE_DIR)/unit_tb.vcd
 
-echo:
-	${VHDL} -a --workdir=${OBJ_DIR} ${SRC_DIR}/$@.vhdl && \
-	${VHDL} -e --workdir=${OBJ_DIR} $@
+echo: $(SRC_DIR)/echo.vhdl
+	$(VHDL) -a --workdir=$(OBJ_DIR) $(SRC_DIR)/$@.vhdl && \
+	$(VHDL) -e --workdir=$(OBJ_DIR) $@
 
-unit:
-	${VHDL} -a --workdir=${OBJ_DIR} ${SRC_DIR}/$@.vhdl && \
-	${VHDL} -e --workdir=${OBJ_DIR} $@
+unit: $(SRC_DIR)/unit.vhdl
+	$(VHDL) -a --workdir=$(OBJ_DIR) $(SRC_DIR)/$@.vhdl && \
+	$(VHDL) -e --workdir=$(OBJ_DIR) $@
 
-unit_tb: unit
-	${VHDL} -a --workdir=${OBJ_DIR} ${SRC_DIR}/$@.vhdl && \
-	${VHDL} -e --workdir=${OBJ_DIR} $@
+unit_tb: unit $(SRC_DIR)/unit_tb.vhdl
+	$(VHDL) -a --workdir=$(OBJ_DIR) $(SRC_DIR)/$@.vhdl && \
+	$(VHDL) -e --workdir=$(OBJ_DIR) $@
 
 clean:
-	rm -f ${OBJ_DIR}/*
-	rm -f ${GTKWAVE_DIR}/*
+	rm -f $(OBJ_DIR)/*
+	rm -f $(GTKWAVE_DIR)/*
 	rm -f e~*
 	rm -f echo
 	rm -f unit
