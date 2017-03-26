@@ -12,7 +12,7 @@ extern unsigned int shift_lfsr(unsigned int);
 		exit(1); \
 	})
 
-#define CAST_TO_BOOL	!!
+#define CAST_TO_BOOL(x)	(!!(x))
 #define BIT(n)			(1ull << (n))
 #define CYCLE			BIT(4)
 #define CAN_PRINT(val)	!(CAST_TO_BOOL(val & (CYCLE - 1)))
