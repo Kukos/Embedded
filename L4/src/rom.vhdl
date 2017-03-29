@@ -17,7 +17,8 @@ end rom_for_crc8;
 architecture const_a0 of rom_for_crc8 is
     constant ADDRESS_WIDTH :integer := 3;
     constant DATA_WIDTH    :integer := 8;
-    type rom_t is array (0 to 2 ** ADDRESS_WIDTH - 1) of std_logic_vector(DATA_WIDTH-1 downto 0);
+    constant SIZE          :integer := 2 ** ADDRESS_WIDTH - 1;
+    type rom_t is array (0 to SIZE) of std_logic_vector(DATA_WIDTH-1 downto 0);
     constant output_after_rom: rom_t := (
 	    X"69",
 	    X"71",
@@ -40,7 +41,8 @@ end const_a0;
 architecture const_66 of rom_for_crc8 is
     constant ADDRESS_WIDTH :integer := 3;
     constant DATA_WIDTH    :integer := 8;
-    type rom_t is array (0 to 2 ** ADDRESS_WIDTH - 1) of std_logic_vector(DATA_WIDTH-1 downto 0);
+    constant SIZE          :integer := 2 ** ADDRESS_WIDTH - 1;
+    type rom_t is array (0 to SIZE) of std_logic_vector(DATA_WIDTH-1 downto 0);
     constant output_after_rom : rom_t := (
         X"35",
 	    X"be",

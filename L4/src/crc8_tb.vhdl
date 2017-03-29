@@ -77,9 +77,9 @@ BEGIN
 	    end if;
 
         clk <= '1';
-		wait for clk_period/2;
+		wait for clk_period / 2;
 		clk <= '0';
-        wait for clk_period/2;
+        wait for clk_period / 2;
 
     end process;
 
@@ -87,9 +87,11 @@ BEGIN
     stim_proc: process
     begin
 
-		-- input your code here
+	-- input your code here
+    
+
 
     wait;
-   end process;
+    end process;
 
 END;
