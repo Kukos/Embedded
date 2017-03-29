@@ -56,3 +56,26 @@ architecture const_66 of rom_for_crc8 is
 begin
   data_out <= output_after_rom(to_integer(unsigned(address)));
 end const_66;
+--
+-- ROM in this architecture stores CRC sums
+-- for constant input vector X"66"
+-- n-th generated CRC sum is stored under n-th address
+--
+architecture const_BC of rom_for_crc8 is
+    constant ADDRESS_WIDTH :integer := 3;
+    constant DATA_WIDTH    :integer := 8;
+    constant SIZE          :integer := 2 ** ADDRESS_WIDTH - 1;
+    type rom_t is array (0 to SIZE) of std_logic_vector(DATA_WIDTH-1 downto 0);
+    constant output_after_rom : rom_t := (
+        X"3d",
+        X"8e",
+        X"9e",
+	    X"ee",
+	    X"b9",
+	    X"1b",
+        X"7c",
+        X"4e"
+	);
+begin
+  data_out <= output_after_rom(to_integer(unsigned(address)));
+end const_BC;

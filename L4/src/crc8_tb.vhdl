@@ -40,9 +40,10 @@ architecture behavior of crc8_tb is
     -- output data
 	signal data_out_a0 :std_logic_vector(7 downto 0);
 	signal data_out_66 :std_logic_vector(7 downto 0);
+    signal data_out_BC :std_logic_vector(7 downto 0);
 
     -- access address
-	signal address :std_logic_vector(2 downto 0);
+	signal address :std_logic_vector(2 downto 0) := (others => '0');
 
 
 BEGIN
@@ -67,6 +68,13 @@ BEGIN
         data_out => data_out_66
 	);
 
+    -- instance of ROM lookup for constant X"BC" input
+    rom_BC : entity work.rom_for_crc8(const_BC)
+    port map (
+        address => address,
+        data_out => data_out_BC
+    );
+
     -- Clock process definitions
     clk_process :process
 	variable wait_done :natural := 0;
@@ -87,9 +95,59 @@ BEGIN
     stim_proc: process
     begin
 
-	-- input your code here
-    
+    -- init datain
+    data_in <= X"a0";
 
+    -- for each addr do
+    for i in 0 to 7 loop
+        -- go to the next addr
+        address <= std_logic_vector(to_unsigned(i, address'length));
+        wait on clk until falling_edge(clk);
+
+        -- check crc
+        assert crc_out = data_out_a0
+            report "[ASSERT]bad crc a0" severity error;
+    end loop;
+
+    -- Set CRC to 0x00
+    data_in <= data_out_a0;
+    wait on clk until falling_edge(clk);
+
+    -- init datain
+    data_in <= X"66";
+
+    -- for each addr do
+    for i in 0 to 7 loop
+        -- go to the next addr
+        address <= std_logic_vector(to_unsigned(i, address'length));
+        wait on clk until falling_edge(clk);
+
+        -- check crc
+        assert crc_out = data_out_66
+            report "[ASSERT]bad crc 66" severity error;
+    end loop;
+
+    -- Set CRC to 0x00
+    data_in <= data_out_66;
+    wait on clk until falling_edge(clk);
+
+    -- init datain
+    data_in <= X"bc";
+
+    -- for each addr do
+    for i in 0 to 7 loop
+        -- go to the next addr
+        address <= std_logic_vector(to_unsigned(i, address'length));
+        wait on clk until falling_edge(clk);
+
+        -- check crc
+        assert crc_out = data_out_BC
+            report "[ASSERT]bad crc BC" severity error;
+    end loop;
+
+    -- Set CRC to 0x00
+    data_in <= data_out_66;
+    wait on clk until falling_edge(clk);
 
     wait;
     end process;
