@@ -19,13 +19,13 @@ architecture behavior of twoway_tb is
     -- input signals
     signal clk: std_logic := '0';
     constant clk_period: time := 20 ns;
-    constant Nbit: positive := 8;
+    constant width: positive := 8;
     -- input/output signal
-    signal qq: std_logic_vector(Nbit downto 0);
+    signal qq: std_logic_vector(width downto 0);
 
 begin
     -- instantiate UUT
-    uut: twoway generic map (width => Nbit)
+    uut: twoway generic map (width => width)
     port map (
           clk => clk,
           q   => qq

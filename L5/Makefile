@@ -4,10 +4,12 @@ VHDL_FLAGS=
 OBJ_DIR=./obj
 SRC_DIR=./src
 GTKWAVE_DIR=./gtkwave
+STOP_TIME=1ms
+
 
 all: vhdl_txt statemachine statemachine_tb sm
 analyze: statemachine_tb
-	$(VHDL) -r statemachine_tb --vcd=$(GTKWAVE_DIR)/statemachine_tb.vcd
+	$(VHDL) -r statemachine_tb --vcd=$(GTKWAVE_DIR)/statemachine_tb.vcd --stop-time=$(STOP_TIME)
 
 vhdl_txt: $(SRC_DIR)/vhdl_txt.vhdl
 	$(VHDL) -a --workdir=$(OBJ_DIR) $(SRC_DIR)/$@.vhdl

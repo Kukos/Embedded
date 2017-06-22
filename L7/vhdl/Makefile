@@ -4,12 +4,13 @@ VHDL_FLAGS=
 OBJ_DIR=./obj
 SRC_DIR=./src
 GTKWAVE_DIR=./gtkwave
+STOP_TIME=1ms
 
 all: lfsr lossy_channel lossy_channel_tb hamming hamming_tb
 
 analyze: hamming_tb lossy_channel_tb
-	$(VHDL) -r hamming_tb --vcd=$(GTKWAVE_DIR)/hamming_tb.vcd && \
-	$(VHDL) -r lossy_channel_tb --vcd=$(GTKWAVE_DIR)/lossy_channel_tb.vcd
+	$(VHDL) -r hamming_tb --vcd=$(GTKWAVE_DIR)/hamming_tb.vcd --stop-time=$(STOP_TIME) && \
+	$(VHDL) -r lossy_channel_tb --vcd=$(GTKWAVE_DIR)/lossy_channel_tb.vcd --stop-time=$(STOP_TIME)
 
 lfsr: $(SRC_DIR)/lfsr.vhdl
 	$(VHDL) -a --workdir=$(OBJ_DIR) $(SRC_DIR)/$@.vhdl && \

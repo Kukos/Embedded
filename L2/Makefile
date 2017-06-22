@@ -4,13 +4,14 @@ VHDL_FLAGS=
 OBJ_DIR=./obj
 SRC_DIR=./src
 GTKWAVE_DIR=./gtkwave
+STOP_TIME=1ms
 
 all: gates multiplexer example example_tb xand selection selection_tb xand_tb
 
 analyze: example_tb selection_tb xand_tb
-	$(VHDL) -r example_tb --vcd=$(GTKWAVE_DIR)/example_tb.vcd
-	$(VHDL) -r selection_tb --vcd=$(GTKWAVE_DIR)/selection_tb.vcd
-	$(VHDL) -r xand_tb --vcd=$(GTKWAVE_DIR)/xand_tb.vcd
+	$(VHDL) -r example_tb --vcd=$(GTKWAVE_DIR)/example_tb.vcd --stop-time=$(STOP_TIME)
+	$(VHDL) -r selection_tb --vcd=$(GTKWAVE_DIR)/selection_tb.vcd --stop-time=$(STOP_TIME)
+	$(VHDL) -r xand_tb --vcd=$(GTKWAVE_DIR)/xand_tb.vcd --stop-time=$(STOP_TIME)
 
 gates: $(SRC_DIR)/gates.vhdl
 	$(VHDL) -a --workdir=$(OBJ_DIR) $(SRC_DIR)/$@.vhdl

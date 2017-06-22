@@ -4,11 +4,13 @@ VHDL_FLAGS=
 OBJ_DIR=./obj
 SRC_DIR=./src
 GTKWAVE_DIR=./gtkwave
+STOP_TIME=1ms
+
 
 all: crc8 crc8_tb pack rom
 
 analyze: crc8_tb
-	$(VHDL) -r crc8_tb --vcd=$(GTKWAVE_DIR)/crc8_tb.vcd
+	$(VHDL) -r crc8_tb --vcd=$(GTKWAVE_DIR)/crc8_tb.vcd --stop-time=$(STOP_TIME)
 
 crc8: $(SRC_DIR)/crc8.vhdl pack
 	$(VHDL) -a --workdir=$(OBJ_DIR) $(SRC_DIR)/$@.vhdl && \

@@ -7,12 +7,13 @@ CFLAGS= -std=gnu99 -Wall -pedantic -Werror -O3
 OBJ_DIR=./obj
 SRC_DIR=./src
 GTKWAVE_DIR=./gtkwave
+STOP_TIME=1ms
 
 all: simple simple_tb twoway twoway_tb lfsr_tb
 
 analyze: simple_tb twoway_tb
-	$(VHDL) -r simple_tb --vcd=$(GTKWAVE_DIR)/simple_tb.vcd
-	$(VHDL) -r twoway_tb --vcd=$(GTKWAVE_DIR)/twoway_tb.vcd
+	$(VHDL) -r simple_tb --vcd=$(GTKWAVE_DIR)/simple_tb.vcd --stop-time=$(STOP_TIME)
+	$(VHDL) -r twoway_tb --vcd=$(GTKWAVE_DIR)/twoway_tb.vcd --stop-time=$(STOP_TIME)
 
 simple: $(SRC_DIR)/simple.vhdl
 	$(VHDL) -a --workdir=$(OBJ_DIR) $(SRC_DIR)/$@.vhdl && \
